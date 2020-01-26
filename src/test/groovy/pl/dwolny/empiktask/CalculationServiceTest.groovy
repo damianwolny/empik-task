@@ -27,7 +27,7 @@ class CalculationServiceTest extends Specification {
 
 	def 'should throw exception when followers are equal to zero'() {
 
-		given: 'new Github user with one repo and follower'
+		given: 'new Github user with one repo and 0 followers'
 			User user = new User()
 			user.setFollowers(0)
 			user.setPublicRepos(1)
@@ -35,7 +35,7 @@ class CalculationServiceTest extends Specification {
 		when:
 			calculationService.getCalculations(user)
 
-		then: 'calculation result is positive and equal to 2.0'
+		then: 'exception is thrown'
 			thrown(IllegalStateException)
 	}
 }
