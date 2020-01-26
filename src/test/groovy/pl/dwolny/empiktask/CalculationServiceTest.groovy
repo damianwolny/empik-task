@@ -7,21 +7,35 @@ import spock.lang.Subject
 
 class CalculationServiceTest extends Specification {
 
-    @Subject
-    CalculationService calculationService = new CalculationService()
+	@Subject
+	CalculationService calculationService = new CalculationService()
 
-    def 'should calculate proper equation result'() {
+	def 'should calculate proper equation result'() {
 
-        given: 'new Github user with one repo and follower'
-        User user = new User()
-        user.setFollowers(1)
-        user.setPublicRepos(1)
+		given: 'new Github user with one repo and follower'
+			User user = new User()
+			user.setFollowers(1)
+			user.setPublicRepos(1)
 
-        when:
-        def calculations = calculationService.getCalculations(user)
+		when:
+			def calculations = calculationService.getCalculations(user)
 
-        then: 'calculation result is positive and equal to 2.0'
-        calculations > 0
-        calculations == 2.0d
-    }
+		then: 'calculation result is positive and equal to 2.0'
+			calculations > 0
+			calculations == 2.0d
+	}
+
+	def 'should throw exception when followers are equal to zero'() {
+
+		given: 'new Github user with one repo and follower'
+			User user = new User()
+			user.setFollowers(0)
+			user.setPublicRepos(1)
+
+		when:
+			calculationService.getCalculations(user)
+
+		then: 'calculation result is positive and equal to 2.0'
+			thrown(IllegalStateException)
+	}
 }
